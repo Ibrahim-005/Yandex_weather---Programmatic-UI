@@ -10,15 +10,16 @@ import SwiftSVG
 
 class DetailView: UIViewController {
 
-    private let cityView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .red
+    private let cityView: UIView = {
+        let imageView = UIView()
+        imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private let cityName: UILabel = {
         let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         label.text = "City name"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +35,7 @@ class DetailView: UIViewController {
     
     private let tempCity: UILabel = {
         let label = UILabel()
+        
         label.text = "16"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -120,8 +122,8 @@ class DetailView: UIViewController {
         Leftstack = UIStackView(arrangedSubviews: [pressure, windSpeed, tempMin, tempMax], axis: .vertical, spacing: 10, distribution: .fillEqually)
         Rightstack = UIStackView(arrangedSubviews: [pressureLabel, windSpeedLabel, tempMinLabel, tempMaxLabel], axis: .vertical, spacing: 10, distribution: .fillEqually)
         Bottomtack = UIStackView(arrangedSubviews: [Rightstack, Leftstack], axis: .horizontal, spacing: 20, distribution: .fillEqually)
-        Topstack = UIStackView(arrangedSubviews: [cityName, cityView, tempCity], axis: .vertical, spacing: 10, distribution: .fill)
-        Mainstack = UIStackView(arrangedSubviews: [Topstack, Bottomtack], axis: .vertical, spacing: 20, distribution: .fillProportionally)
+        Topstack = UIStackView(arrangedSubviews: [cityName, cityView, tempCity], axis: .vertical, spacing: 50, distribution: .fill)
+        Mainstack = UIStackView(arrangedSubviews: [Topstack, Bottomtack], axis: .vertical, spacing: 100, distribution: .fillProportionally)
         
         view.addSubview(Mainstack)
         
@@ -132,9 +134,9 @@ class DetailView: UIViewController {
         let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(String(describing: weatherM!.conditionCode)).svg")!
 
         let Wimage = UIView(SVGURL: url) { imagess in
-            imagess.resizeToFit(self.cityView.frame)
+            imagess.resizeToFit(self.cityView.bounds)
         }
-        Wimage.maximumContentSizeCategory
+        Wimage.sizeToFit()
         self.cityView.addSubview(Wimage)
     
         tempCity.text = weatherM?.tempString
@@ -150,11 +152,23 @@ class DetailView: UIViewController {
     private func setConstraints(){
         
         NSLayoutConstraint.activate([
-            Mainstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            Mainstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10),
+            Mainstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            Mainstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             Mainstack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            Mainstack.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+         //   Mainstack.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
         ])
+        
+        NSLayoutConstraint.activate([
+            cityView.widthAnchor.constraint(equalToConstant: 100),
+            cityView.heightAnchor.constraint(equalToConstant: 100)
+
+        ])
+        
+//        NSLayoutConstraint.activate([
+//            Topstack.leadingAnchor.constraint(equalTo: Mainstack.trailingAnchor, constant: 80)
+//
+//        ])
+        
     }
 }

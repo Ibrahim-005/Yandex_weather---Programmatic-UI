@@ -12,6 +12,7 @@ let weatherManager = WeatherManager()
 
 func getWeather(cityArray: [String] , completion : @escaping(Int, Weather) -> Void){
     for (index1 , item) in cityArray.enumerated() {
+       
         getCoordinate(city: item) { conrdinat, error in
             guard let coordinate = conrdinat , error == nil else {return}
             

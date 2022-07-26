@@ -6,13 +6,14 @@
 //
 
 import UIKit
-
-class ListTVC: UIViewController , UISearchBarDelegate {
+import Foundation
+class ListTVC: UIViewController, UISearchControllerDelegate, UISearchBarDelegate  {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.register(ListCell.self, forCellReuseIdentifier: "cell")
+       
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -22,10 +23,9 @@ class ListTVC: UIViewController , UISearchBarDelegate {
     var cityArray = [Weather]()
     var filterCityArray = [Weather]()
     
-    var nameCityArray = ["Moscow", "Novosibirsk","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan", "Kosonsoy"]
-    
-    let searchController = UISearchController(searchResultsController: nil)
-    
+    var nameCityArray = ["Moscow", "Novosibirsk","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan"]
+    var searchController = UISearchController(searchResultsController: nil)
+   
     var searchBarIsEmpty : Bool {
         guard let text = searchController.searchBar.text else {return false}
         return text.isEmpty
@@ -47,28 +47,38 @@ class ListTVC: UIViewController , UISearchBarDelegate {
         setConstraints()
         setupDelegate()
         setNavigationBar()
-        
+        setupSearchController()
     }
     
     private func setupView(){
-        
         view.addSubview(tableView)
     }
     
     private func setupDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        searchController.searchBar.delegate = self
+        //searchController.searchBar.delegate = self
     }
     
     private func setNavigationBar() {
-        navigationItem.title = "Albums"
         
+        navigationItem.hidesSearchBarWhenScrolling = false
+       
+        navigationItem.title = "List of Citis"
         navigationItem.searchController = searchController
+       // searchController.obscuresBackgroundDuringPresentation = true
         
         let userInfoButton = createCustomButton(selector: #selector(AddCityByALert))
         navigationItem.rightBarButtonItem = userInfoButton
+    }
+    
+    private func setupSearchController() {
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search"
+        definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = false
     }
     
     @objc private func AddCityByALert(){
@@ -76,7 +86,6 @@ class ListTVC: UIViewController , UISearchBarDelegate {
             self.nameCityArray.append(city)
             self.cityArray.append(self.emptyCity)
             self.addCities()
-            //  self.tableView.reloadData()
         }
     }
     
@@ -93,7 +102,6 @@ class ListTVC: UIViewController , UISearchBarDelegate {
             }
         }
     }
-    
 }
 
     // MARK: - Table view data source
@@ -116,38 +124,37 @@ extension ListTVC : UITableViewDataSource {
         }else{
             weather = cityArray[indexPath.row]
         }
-        print(weather)
         cell.configure(weather: weather)
         
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            guard let indexPath = tableView.indexPathForSelectedRow else {return}
-            
-            if isFiltering {
-                let filter = filterCityArray[indexPath.row]
-                let destination = segue.destination as! DetailView
-                destination.weatherM = filter
-            }
-            else{
-                let wData = cityArray[indexPath.row]
-                let destination = segue.destination as! DetailView
-                destination.weatherM = wData
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetail" {
+//            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+//
+//            if isFiltering {
+//                let filter = filterCityArray[indexPath.row]
+//                let destination = segue.destination as! DetailView
+//                destination.weatherM = filter
+//            }
+//            else{
+//                let wData = cityArray[indexPath.row]
+//                let destination = segue.destination as! DetailView
+//                destination.weatherM = wData
+//            }
+//        }
+//    }
 }
 
 extension ListTVC: UITableViewDelegate {
     
     internal func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+
         let delete = UIContextualAction(style: .destructive, title: "Delete") { _ , _ , completion in
-            
+
             let editingRow = self.nameCityArray[indexPath.row]
-            
+
             if let index = self.nameCityArray.firstIndex(of: editingRow){
                 if self.isFiltering {
                     self.filterCityArray.remove(at: index)
@@ -162,26 +169,23 @@ extension ListTVC: UITableViewDelegate {
     }
     
     
-    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailView()
         
         if isFiltering {
-            let filter = filterCityArray[indexPath.row]
-            detailVC.weatherM = filter
+            let filterCity = filterCityArray[indexPath.row]
+            detailVC.weatherM = filterCity
         }
         else{
-            let wData = cityArray[indexPath.row]
-            detailVC.weatherM = wData
+            let city = cityArray[indexPath.row]
+            detailVC.weatherM = city
         }
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
-   //place
-
-
-extension ListTVC: UISearchResultsUpdating {
+extension ListTVC: UISearchResultsUpdating  {
     
     func updateSearchResults(for searchController: UISearchController) {
         filteredContextForSearch(searchController.searchBar.text!)
@@ -189,11 +193,13 @@ extension ListTVC: UISearchResultsUpdating {
     
     func filteredContextForSearch(_ searchText: String){
         
-        filterCityArray = cityArray.filter({ filter in
+        filterCityArray = cityArray.filter({ filter  in
             filter.name.contains(searchText)
+            
+            tableView.reloadData()
+        return true
         })
-        
-        tableView.reloadData()
+      
     }
 }
 

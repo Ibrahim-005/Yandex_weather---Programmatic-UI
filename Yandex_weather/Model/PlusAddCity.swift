@@ -12,6 +12,7 @@ extension UIViewController {
     func alertCity(name: String, placeHolder: String , completion: @escaping(String) -> Void){
         
         let alertCont = UIAlertController(title: name, message: "", preferredStyle: .alert)
+      
         let alertOk = UIAlertAction(title: "OK", style: .default) { action in
             if let tftext = alertCont.textFields?.first {
                 let text = tftext.text!
