@@ -11,13 +11,13 @@
         <!--ListView-->
         <scene sceneID="XWb-Xe-aPw">
             <objects>
-                <tableViewController id="u8J-cS-Gu7" customClass="ListTVC" customModule="Yandex_weather" sceneMemberID="viewController">
+                <tableViewController id="u8J-cS-Gu7" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="69F-Xs-lPy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="CG7-jc-Mpl" customClass="ListCell" customModule="Yandex_weather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="CG7-jc-Mpl">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="47"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CG7-jc-Mpl" id="alN-PD-mfd">
@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="1649" y="123"/>
         </scene>
-        <!--Detail View-->
+        <!--View Controller-->
         <scene sceneID="ghS-pL-WpN">
             <objects>
-                <viewController id="5Ie-en-bnS" customClass="DetailView" customModule="Yandex_weather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5Ie-en-bnS" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Moe-bg-Dde">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

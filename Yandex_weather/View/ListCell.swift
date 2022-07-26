@@ -9,21 +9,77 @@ import UIKit
 
 class ListCell: UITableViewCell {
 
-    @IBOutlet weak var cityName: UILabel!
-    @IBOutlet weak var cityCondition: UILabel!
-    @IBOutlet weak var tempCity: UILabel!
+    private let cityName: UILabel = {
+       let label = UILabel()
+        label.text = "Name"
+        label.font = .boldSystemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let cityConditionName: UILabel = {
+        let label = UILabel()
+         label.text = "Cloudy"
+         label.font = UIFont.systemFont(ofSize: 13)
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+    }()
+    
+    private let tempCity: UILabel = {
+        let label = UILabel()
+         label.text = "25"
+         label.font = UIFont.systemFont(ofSize: 14)
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+    }()
+    
+    var stackview = UIStackView()
+    var tempStack = UIStackView()
+    
+//    @IBOutlet weak var cityName: UILabel!
+//    @IBOutlet weak var cityCondition: UILabel!
+//    @IBOutlet weak var tempCity: UILabel!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-      
+        setupView()
+        setConstraints()
     }
+    
+    private func setupView(){
+        
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+        
+        tempStack = UIStackView(arrangedSubviews: [cityConditionName, tempCity], axis: .horizontal, spacing: 80, distribution: .fill)
+        stackview = UIStackView(arrangedSubviews: [cityName, tempStack], axis: .horizontal, spacing: 100, distribution: .fillEqually)
+        
+        self.addSubview(stackview)
+        
+    }
+    
+    
     
     func configure(weather: Weather){
         self.cityName.text = weather.name
-        self.cityCondition.text = weather.condition
+        self.cityConditionName.text = weather.condition
         self.tempCity.text = weather.tempString
     }
-
+    
+    
+    private func setConstraints(){
+        
+        NSLayoutConstraint.activate([
+            
+            stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
+            stackview.topAnchor.constraint(equalTo: topAnchor, constant: 2)
+            
+            
+        ])
+        
+    }
+    
 }
 

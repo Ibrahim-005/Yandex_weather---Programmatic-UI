@@ -7,13 +7,22 @@
 
 import UIKit
 
-class ListTVC: UITableViewController {
+class ListTVC: UIViewController , UISearchBarDelegate {
 
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .white
+        tableView.register(ListCell.self, forCellReuseIdentifier: "cell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    
     let emptyCity = Weather()
     var cityArray = [Weather]()
     var filterCityArray = [Weather]()
     
-    var nameCityArray = ["Moscow", "Novosibirsk","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan"]
+    var nameCityArray = ["Moscow", "Novosibirsk","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan", "Kosonsoy"]
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -33,29 +42,54 @@ class ListTVC: UITableViewController {
             cityArray = Array(repeating: emptyCity, count: nameCityArray.count)
         }
         
-        addCities()
-        tableView.delegate = self
-        tableView.dataSource = self
+//        addCities()
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search"
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
+//        navigationItem.hidesSearchBarWhenScrolling = false
         
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        navigationItem.hidesSearchBarWhenScrolling = false
+        addCities()
+        setupView()
+        setConstraints()
+        setupDelegate()
+        setNavigationBar()
         
     }
 
    
-    @IBAction func AddCitybyAlert(_ sender: UIBarButtonItem) {
+    private func setupView(){
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+    }
+    
+    private func setupDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
         
+        searchController.searchBar.delegate = self
+    }
+    
+    private func setNavigationBar() {
+        navigationItem.title = "Albums"
+       
+        navigationItem.searchController = searchController
+        
+        let userInfoButton = createCustomButton(selector: #selector(AddCityByALert))
+        navigationItem.rightBarButtonItem = userInfoButton
+    }
+    
+    @objc private func AddCityByALert(){
         alertCity(name: "City", placeHolder: "Add a new city ") { city in
             self.nameCityArray.append(city)
             self.cityArray.append(self.emptyCity)
             self.addCities()
           //  self.tableView.reloadData()
         }
-        
     }
     
     
@@ -69,22 +103,24 @@ class ListTVC: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-          //  print(weather)
         }
-
     }
+    
+}
     
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ListTVC : UITableViewDataSource {
+    
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filterCityArray.count
         }
         return cityArray.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListCell
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListCell
         var weather = Weather()
         
         if isFiltering {
@@ -97,27 +133,6 @@ class ListTVC: UITableViewController {
         
         return cell
     }
-    
-    
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-      
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { _ , _ , completion in
-           
-            let editingRow = self.nameCityArray[indexPath.row]
-       
-            if let index = self.nameCityArray.firstIndex(of: editingRow){
-                if self.isFiltering {
-                    self.filterCityArray.remove(at: index)
-                }
-                else{
-                    self.cityArray.remove(at: index)
-                }
-            }
-            tableView.reloadData()
-        }
-        return UISwipeActionsConfiguration(actions: [delete])
-    }
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
@@ -137,6 +152,50 @@ class ListTVC: UITableViewController {
     }
 }
 
+extension ListTVC: UITableViewDelegate {
+    
+internal func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+      
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { _ , _ , completion in
+           
+            let editingRow = self.nameCityArray[indexPath.row]
+       
+            if let index = self.nameCityArray.firstIndex(of: editingRow){
+                if self.isFiltering {
+                    self.filterCityArray.remove(at: index)
+                }
+                else{
+                    self.cityArray.remove(at: index)
+                }
+            }
+            tableView.reloadData()
+        }
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        70
+//    }
+    
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = DetailView()
+        
+        if isFiltering {
+            let filter = filterCityArray[indexPath.row]
+            detailVC.weatherM = filter
+        }
+        else{
+            let wData = cityArray[indexPath.row]
+            detailVC.weatherM = wData
+        }
+        
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+    
+   //place
+
+
 extension ListTVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -153,3 +212,14 @@ extension ListTVC: UISearchResultsUpdating {
     }
 }
 
+extension ListTVC {
+    private func setConstraints() {
+        
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+    }
+}

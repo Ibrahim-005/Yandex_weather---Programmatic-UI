@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0DA88DE171CFDFF6CFF00E96 /* Pods_Yandex_weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D34FACD24E561737DF6F6A4 /* Pods_Yandex_weather.framework */; };
 		2530E262288690B8009E4F7B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2530E261288690B8009E4F7B /* DetailView.swift */; };
+		2558BB8E288F953400DE8470 /* UistackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2558BB8D288F953400DE8470 /* UistackView.swift */; };
 		2584E0E128850DFA007776C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584E0E028850DFA007776C8 /* AppDelegate.swift */; };
 		2584E0E328850DFA007776C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584E0E228850DFA007776C8 /* SceneDelegate.swift */; };
 		2584E0E828850DFA007776C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2584E0E628850DFA007776C8 /* Main.storyboard */; };
@@ -20,12 +21,14 @@
 		2584E101288518D2007776C8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584E100288518D2007776C8 /* Constants.swift */; };
 		2584E10328851C3B007776C8 /* GetcityWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584E10228851C3B007776C8 /* GetcityWeather.swift */; };
 		2587024728865879000C729C /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2587024628865879000C729C /* ListCell.swift */; };
+		25B87BBB288EF4910094B0BE /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B87BBA288EF4910094B0BE /* BarButton.swift */; };
 		25EAC120288709B000ED4229 /* PlusAddCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAC11F288709B000ED4229 /* PlusAddCity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16F17E44973668D6AD92631E /* Pods-Yandex_weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yandex_weather.debug.xcconfig"; path = "Target Support Files/Pods-Yandex_weather/Pods-Yandex_weather.debug.xcconfig"; sourceTree = "<group>"; };
 		2530E261288690B8009E4F7B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		2558BB8D288F953400DE8470 /* UistackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UistackView.swift; sourceTree = "<group>"; };
 		2584E0DD28850DFA007776C8 /* Yandex_weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yandex_weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2584E0E028850DFA007776C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2584E0E228850DFA007776C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		2584E100288518D2007776C8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2584E10228851C3B007776C8 /* GetcityWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetcityWeather.swift; sourceTree = "<group>"; };
 		2587024628865879000C729C /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		25B87BBA288EF4910094B0BE /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		25EAC11F288709B000ED4229 /* PlusAddCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusAddCity.swift; sourceTree = "<group>"; };
 		376CC195A92DA92E397859E6 /* Pods-Yandex_weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yandex_weather.release.xcconfig"; path = "Target Support Files/Pods-Yandex_weather/Pods-Yandex_weather.release.xcconfig"; sourceTree = "<group>"; };
 		6D34FACD24E561737DF6F6A4 /* Pods_Yandex_weather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_weather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +95,7 @@
 				2584E0F62885126A007776C8 /* Model */,
 				2584E0F528851264007776C8 /* View */,
 				2584E0F42885125B007776C8 /* Controller */,
+				25B87BB9288EF46C0094B0BE /* Extension */,
 				2584E0FF288518BE007776C8 /* Constant */,
 				2584E0E928850DFB007776C8 /* Assets.xcassets */,
 				2584E0EE28850DFB007776C8 /* Info.plist */,
@@ -134,6 +139,15 @@
 				2584E100288518D2007776C8 /* Constants.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		25B87BB9288EF46C0094B0BE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				25B87BBA288EF4910094B0BE /* BarButton.swift */,
+				2558BB8D288F953400DE8470 /* UistackView.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		9CB1E7017328F3CAB9520463 /* Frameworks */ = {
@@ -261,11 +275,13 @@
 				2530E262288690B8009E4F7B /* DetailView.swift in Sources */,
 				2584E10328851C3B007776C8 /* GetcityWeather.swift in Sources */,
 				2584E0FE288517C2007776C8 /* WeatherManager.swift in Sources */,
+				25B87BBB288EF4910094B0BE /* BarButton.swift in Sources */,
 				2584E0F828851298007776C8 /* ListTVC.swift in Sources */,
 				2584E0E128850DFA007776C8 /* AppDelegate.swift in Sources */,
 				2584E0FA28851324007776C8 /* WeatherData.swift in Sources */,
 				2584E101288518D2007776C8 /* Constants.swift in Sources */,
 				25EAC120288709B000ED4229 /* PlusAddCity.swift in Sources */,
+				2558BB8E288F953400DE8470 /* UistackView.swift in Sources */,
 				2587024728865879000C729C /* ListCell.swift in Sources */,
 				2584E0E328850DFA007776C8 /* SceneDelegate.swift in Sources */,
 				2584E0FC288515ED007776C8 /* Weather.swift in Sources */,

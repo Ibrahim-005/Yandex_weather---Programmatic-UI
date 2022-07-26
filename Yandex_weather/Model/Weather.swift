@@ -9,7 +9,7 @@ import Foundation
 
 struct Weather {
     
-    var name : String = "PPPPPP"
+    var name : String = "Name"
     var temperature : Double = 0.0
     var tempString : String {
         return String(format: "%.0f", temperature)
