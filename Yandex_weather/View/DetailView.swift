@@ -98,18 +98,6 @@ class DetailView: UIViewController {
     }()
    
     
-//
-//    @IBOutlet weak var cityName: UILabel!
-//    @IBOutlet weak var cityView: UIView!
-//    @IBOutlet weak var Condition1: UILabel!
-//
-//    @IBOutlet weak var Condition: UILabel!
-//    @IBOutlet weak var tempCity: UILabel!
-//    @IBOutlet weak var pressure: UILabel!
-//    @IBOutlet weak var windSpeed: UILabel!
-//    @IBOutlet weak var tempMin: UILabel!
-//    @IBOutlet weak var tempMax: UILabel!
-//
     var Mainstack = UIStackView()
     var Topstack = UIStackView()
     var Bottomtack = UIStackView()
@@ -142,22 +130,13 @@ class DetailView: UIViewController {
     func refreshLabel(){
         cityName.text = weatherM?.name
         let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(String(describing: weatherM!.conditionCode)).svg")!
-//        let Wimage = UIView(SVGURL: url!) { (image) in
-//            image.resizeToFit(self.cityView.bounds)
-//        }
-//        guard url != nil else {
-//            print("XATTOOOO")
-//            return
-//        }
+
         let Wimage = UIView(SVGURL: url) { imagess in
             imagess.resizeToFit(self.cityView.frame)
         }
         Wimage.maximumContentSizeCategory
         self.cityView.addSubview(Wimage)
-       
     
-        
-      //  Condition1.text = weatherM?.condition
         tempCity.text = weatherM?.tempString
         pressure.text = String(format: "%.0f", weatherM!.pressureMm)
         windSpeed.text = String(format: "%.0f", weatherM!.windSpeed)
@@ -177,12 +156,5 @@ class DetailView: UIViewController {
             Mainstack.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
         ])
-        
     }
-    
 }
-//var imageView = UIImageView()
-//        var image = UIImage(named: "work25")
-//        imageView.image = image
-//        dropoffLocationField.rightView = imageView
-//        dropoffLocationField.rightViewMode = .always

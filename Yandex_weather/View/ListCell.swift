@@ -35,16 +35,13 @@ class ListCell: UITableViewCell {
     
     var stackview = UIStackView()
     var tempStack = UIStackView()
-    
-//    @IBOutlet weak var cityName: UILabel!
-//    @IBOutlet weak var cityCondition: UILabel!
-//    @IBOutlet weak var tempCity: UILabel!
-    
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupView()
         setConstraints()
+        cityName.text = "fdsgdffg"
     }
     
     private func setupView(){
@@ -52,8 +49,8 @@ class ListCell: UITableViewCell {
         self.backgroundColor = .clear
         self.selectionStyle = .none
         
-        tempStack = UIStackView(arrangedSubviews: [cityConditionName, tempCity], axis: .horizontal, spacing: 80, distribution: .fill)
-        stackview = UIStackView(arrangedSubviews: [cityName, tempStack], axis: .horizontal, spacing: 100, distribution: .fillEqually)
+        tempStack = UIStackView(arrangedSubviews: [cityConditionName, tempCity], axis: .horizontal, spacing: 10, distribution: .fill)
+        stackview = UIStackView(arrangedSubviews: [cityName, tempStack], axis: .horizontal, spacing: 10, distribution: .fillEqually)
         
         self.addSubview(stackview)
         
@@ -62,7 +59,7 @@ class ListCell: UITableViewCell {
     
     
     func configure(weather: Weather){
-        self.cityName.text = weather.name
+        self.cityName.text = "nimadur"
         self.cityConditionName.text = weather.condition
         self.tempCity.text = weather.tempString
     }
@@ -71,15 +68,11 @@ class ListCell: UITableViewCell {
     private func setConstraints(){
         
         NSLayoutConstraint.activate([
-            
             stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
             stackview.topAnchor.constraint(equalTo: topAnchor, constant: 2)
             
-            
         ])
-        
     }
-    
 }
 
