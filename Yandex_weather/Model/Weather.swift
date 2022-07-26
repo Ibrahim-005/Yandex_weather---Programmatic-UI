@@ -30,11 +30,10 @@ struct Weather {
         condition = weatherData.fact.condition
         pressureMm = weatherData.fact.pressureMm
         windSpeed = weatherData.fact.windSpeed
-      //  tempMax = (weatherData.forecasts.first?.parts.day.tempMax)!
+        //tempMax = (weatherData.forecasts.first?.parts.day.tempMax)!
         //tempMin = (weatherData.forecasts.first?.parts.day.tempMin)!
         
     }
+    init(){ }
     
-    init (){
-    }
 }

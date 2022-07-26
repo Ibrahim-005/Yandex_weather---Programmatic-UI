@@ -52,25 +52,7 @@ class ListCell: UITableViewCell {
         setConstraints()
     }
     
-    
-//    required init(coder: NSCoder){
-//        super.init(coder: coder)!
-//        setupView()
-//        setConstraints()
-//        cityName.text = "fdsgdffg"
-//    }
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        setupView()
-//        setConstraints()
-//        cityName.text = "fdsgdffg"
-//    }
-    
     private func setupView(){
-        
         self.backgroundColor = .clear
         self.selectionStyle = .none
         
@@ -78,35 +60,20 @@ class ListCell: UITableViewCell {
         stackview = UIStackView(arrangedSubviews: [cityName, tempStack], axis: .horizontal, spacing: 25, distribution: .fillEqually)
         
         self.addSubview(stackview)
-        //print(stackview)
     }
-    
-    
     
     func configure(weather: Weather){
         self.cityName.text = weather.name
         self.cityConditionName.text = weather.condition
         self.tempCity.text = weather.tempString
-        
-//        print(weather.name)
-//        print(weather.tempString)
     }
-    
     
     private func setConstraints(){
         
         NSLayoutConstraint.activate([
             stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
-            stackview.topAnchor.constraint(equalTo: topAnchor, constant: 9),
-            
-            
-        ])
-        
-        NSLayoutConstraint.activate([
-        
-//            cityName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
-//            
+            stackview.topAnchor.constraint(equalTo: topAnchor, constant: 9)
         ])
     }
 }

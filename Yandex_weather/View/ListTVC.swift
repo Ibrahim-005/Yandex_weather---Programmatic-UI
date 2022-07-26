@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import Foundation
-class ListTVC: UIViewController, UISearchControllerDelegate, UISearchBarDelegate  {
+
+class ListTVC: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.register(ListCell.self, forCellReuseIdentifier: "cell")
-       
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -41,7 +40,6 @@ class ListTVC: UIViewController, UISearchControllerDelegate, UISearchBarDelegate
         if cityArray.isEmpty{
             cityArray = Array(repeating: emptyCity, count: nameCityArray.count)
         }
-        
         addCities()
         setupView()
         setConstraints()
@@ -57,27 +55,20 @@ class ListTVC: UIViewController, UISearchControllerDelegate, UISearchBarDelegate
     private func setupDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
-        //searchController.searchBar.delegate = self
     }
     
     private func setNavigationBar() {
-        
         navigationItem.hidesSearchBarWhenScrolling = false
-       
         navigationItem.title = "List of Citis"
         navigationItem.searchController = searchController
-       // searchController.obscuresBackgroundDuringPresentation = true
-        
+  
         let userInfoButton = createCustomButton(selector: #selector(AddCityByALert))
         navigationItem.rightBarButtonItem = userInfoButton
     }
     
     private func setupSearchController() {
-        searchController.delegate = self
-        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search"
-        definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
     }
     
@@ -104,15 +95,16 @@ class ListTVC: UIViewController, UISearchControllerDelegate, UISearchBarDelegate
     }
 }
 
-    // MARK: - Table view data source
+// MARK: - Table view data source
 
 extension ListTVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filterCityArray.count
+        } else{
+            return cityArray.count
         }
-        return cityArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,24 +120,9 @@ extension ListTVC : UITableViewDataSource {
         
         return cell
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            guard let indexPath = tableView.indexPathForSelectedRow else {return}
-//
-//            if isFiltering {
-//                let filter = filterCityArray[indexPath.row]
-//                let destination = segue.destination as! DetailView
-//                destination.weatherM = filter
-//            }
-//            else{
-//                let wData = cityArray[indexPath.row]
-//                let destination = segue.destination as! DetailView
-//                destination.weatherM = wData
-//            }
-//        }
-//    }
 }
+
+//MARK: - TableView Delegate
 
 extension ListTVC: UITableViewDelegate {
     
@@ -185,6 +162,8 @@ extension ListTVC: UITableViewDelegate {
     }
 }
 
+//MARK: - Searching by Filter
+
 extension ListTVC: UISearchResultsUpdating  {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -193,15 +172,14 @@ extension ListTVC: UISearchResultsUpdating  {
     
     func filteredContextForSearch(_ searchText: String){
         
-        filterCityArray = cityArray.filter({ filter  in
-            filter.name.contains(searchText)
-            
-            tableView.reloadData()
-        return true
-        })
-      
+        filterCityArray = searchText.isEmpty ? cityArray : cityArray.filter {
+            $0.name.contains(searchText)
+        }
+        tableView.reloadData()
     }
 }
+
+//MARK: - Set Constraints
 
 extension ListTVC {
     private func setConstraints() {

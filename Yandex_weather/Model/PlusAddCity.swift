@@ -24,7 +24,6 @@ extension UIViewController {
             tf.placeholder = placeHolder
             tf.enablesReturnKeyAutomatically = true
             tf.autocapitalizationType = .sentences
-            // tf.autocorrectionType = .yes
         }
         
         let alertCancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
