@@ -80,8 +80,6 @@ class ListTVC: UIViewController {
         }
     }
     
-    
-    
     func addCities(){
         
         getWeather(cityArray: self.nameCityArray) { index, weather in
@@ -145,7 +143,7 @@ extension ListTVC: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
-    
+    // Selection city and carry datas to the detailView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailView()
         

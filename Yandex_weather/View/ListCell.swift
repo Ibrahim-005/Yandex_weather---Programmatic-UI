@@ -41,7 +41,6 @@ class ListCell: UITableViewCell {
         super.init(coder: Adecoder)
         self.configure()
     }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
@@ -58,7 +57,6 @@ class ListCell: UITableViewCell {
         
         tempStack = UIStackView(arrangedSubviews: [cityConditionName, tempCity], axis: .horizontal, spacing: 20, distribution: .fillEqually)
         stackview = UIStackView(arrangedSubviews: [cityName, tempStack], axis: .horizontal, spacing: 25, distribution: .fillEqually)
-        
         self.addSubview(stackview)
     }
     
@@ -69,7 +67,6 @@ class ListCell: UITableViewCell {
     }
     
     private func setConstraints(){
-        
         NSLayoutConstraint.activate([
             stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),

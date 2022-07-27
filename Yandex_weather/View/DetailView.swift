@@ -10,32 +10,25 @@ import SwiftSVG
 
 class DetailView: UIViewController {
 
-    private let weatherIconImage: UIView = {
-        let imageView = UIView()
+    private let weatherIcon: UIImageView = {
+        let imageView = UIImageView()
         imageView.backgroundColor = .white
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = true
         return imageView
     }()
     
     private let cityName: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = .boldSystemFont(ofSize: 22)
         label.numberOfLines = 0
         label.text = "City name"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let Condition: UILabel = {
-        let label = UILabel()
-        label.text = "Cloudy"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private let tempCity: UILabel = {
         let label = UILabel()
-        
+        label.font = UIFont.systemFont(ofSize: 22)
         label.text = "16"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -98,15 +91,17 @@ class DetailView: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-   
     
     var Mainstack = UIStackView()
     var Topstack = UIStackView()
     var Bottomtack = UIStackView()
     var Leftstack = UIStackView()
     var Rightstack = UIStackView()
+    var Tempstack = UIStackView()
     
     var weatherM : Weather?
+    var tempIcon = "°C"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,40 +116,35 @@ class DetailView: UIViewController {
         Leftstack = UIStackView(arrangedSubviews: [pressure, windSpeed, tempMin, tempMax], axis: .vertical, spacing: 10, distribution: .fillEqually)
         Rightstack = UIStackView(arrangedSubviews: [pressureLabel, windSpeedLabel, tempMinLabel, tempMaxLabel], axis: .vertical, spacing: 10, distribution: .fillEqually)
         Bottomtack = UIStackView(arrangedSubviews: [Rightstack, Leftstack], axis: .horizontal, spacing: 20, distribution: .fillEqually)
-        Topstack = UIStackView(arrangedSubviews: [cityName, weatherIconImage, tempCity], axis: .vertical, spacing: 50, distribution: .fill)
-        Mainstack = UIStackView(arrangedSubviews: [Topstack, Bottomtack], axis: .vertical, spacing: 100, distribution: .fillProportionally)
-        
+        Tempstack = UIStackView(arrangedSubviews: [tempCity, weatherIcon], axis: .vertical, spacing: 5, distribution: .fillEqually)
+        Topstack = UIStackView(arrangedSubviews: [cityName, Tempstack], axis: .horizontal, spacing: 50, distribution: .fill)
+        Mainstack = UIStackView(arrangedSubviews: [Topstack, Bottomtack], axis: .vertical, spacing: 200, distribution: .fillProportionally)
+       
         view.addSubview(Mainstack)
     }
     
+    // Set data to the Properties from model
     func refreshLabel(){
         cityName.text = weatherM?.name
-        
-        let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(String(describing: weatherM!.conditionCode)).svg")!
-        let Wimage = UIView(SVGURL: url) { imagess in
-            imagess.resizeToFit(self.weatherIconImage.bounds)
-        }
-        Wimage.sizeToFit()
-        self.weatherIconImage.addSubview(Wimage)
-    
-        tempCity.text = weatherM?.tempString
+        weatherIcon.image = UIImage(systemName: weatherM?.icon ?? "")
+        tempCity.text = (weatherM!.tempString + tempIcon)
         pressure.text = String(format: "%.0f", weatherM!.pressureMm)
         windSpeed.text = String(format: "%.0f", weatherM!.windSpeed)
         tempMin.text = String(format: "%.0f", weatherM!.tempMin)
         tempMax.text = String(format: "%.0f", weatherM!.tempMax)
     }
     
-    
+   // Set Constraints
     private func setConstraints(){
         NSLayoutConstraint.activate([
+            Mainstack.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             Mainstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            Mainstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            Mainstack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            Mainstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
         NSLayoutConstraint.activate([
-            weatherIconImage.widthAnchor.constraint(equalToConstant: 100),
-            weatherIconImage.heightAnchor.constraint(equalToConstant: 100)
+            weatherIcon.widthAnchor.constraint(equalToConstant: 55),
+            weatherIcon.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
