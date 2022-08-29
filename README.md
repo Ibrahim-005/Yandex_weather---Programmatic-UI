@@ -2,6 +2,8 @@
 
 Yandex Weather app , used Y-Weather-Api ...
 
+Designed only with code ,  ! Not used storyboard & swiftUi !
+
 
 __List Cities  &  Search city from List :__
 
